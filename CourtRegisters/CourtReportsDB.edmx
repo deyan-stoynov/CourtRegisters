@@ -1,0 +1,504 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CourtRegistersDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="Counters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TableEnum" Type="int" Nullable="false" />
+          <Property Name="LastNum" Type="int" Nullable="false" />
+          <Property Name="NextNum" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="Year" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblCSI">
+          <Key>
+            <PropertyRef Name="IdCSI" />
+          </Key>
+          <Property Name="IdCSI" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CSINumber" Type="int" Nullable="false" />
+          <Property Name="CSIName" Type="nvarchar" MaxLength="150" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblRegisterBidder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IncomeNumber" Type="int" Nullable="false" />
+          <Property Name="CaseNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdCSI" Type="int" Nullable="false" />
+          <Property Name="BidderName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="BidderAddress" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="PostingDate" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblRegisterProtocols">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IncomeNumber" Type="int" Nullable="false" />
+          <Property Name="IdCSI" Type="int" Nullable="false" />
+          <Property Name="CaseNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PostingDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tblRegisterPublicSalesRooms">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IncomeNumber" Type="int" Nullable="false" />
+          <Property Name="IdCSI" Type="int" Nullable="false" />
+          <Property Name="PublicSaleDateTime" Type="smalldatetime" Nullable="false" />
+          <Property Name="PublicSaleLocation" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="PostingDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="tblSecurity">
+          <Key>
+            <PropertyRef Name="IdSec" />
+          </Key>
+          <Property Name="IdSec" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Court" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="HashValue" Type="nvarchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CourtRegistersDB.dbo.vwProtocolsForDay' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwProtocolsForDay">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IncomeNumber" />
+            <PropertyRef Name="CaseNumber" />
+            <PropertyRef Name="PostingDate" />
+            <PropertyRef Name="IdCSI" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="IncomeNumber" Type="int" Nullable="false" />
+          <Property Name="CaseNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PostingDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="IdCSI" Type="int" Nullable="false" />
+          <Property Name="CSIName" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <Association Name="FK_tblRegisterBidder_tblCSI">
+          <End Role="tblCSI" Type="Self.tblCSI" Multiplicity="1" />
+          <End Role="tblRegisterBidder" Type="Self.tblRegisterBidder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCSI">
+              <PropertyRef Name="IdCSI" />
+            </Principal>
+            <Dependent Role="tblRegisterBidder">
+              <PropertyRef Name="IdCSI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblRegisterProtocols_tblCSI">
+          <End Role="tblCSI" Type="Self.tblCSI" Multiplicity="1" />
+          <End Role="tblRegisterProtocols" Type="Self.tblRegisterProtocols" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCSI">
+              <PropertyRef Name="IdCSI" />
+            </Principal>
+            <Dependent Role="tblRegisterProtocols">
+              <PropertyRef Name="IdCSI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblRegisterPublicSalesRooms_tblCSI">
+          <End Role="tblCSI" Type="Self.tblCSI" Multiplicity="1" />
+          <End Role="tblRegisterPublicSalesRooms" Type="Self.tblRegisterPublicSalesRooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCSI">
+              <PropertyRef Name="IdCSI" />
+            </Principal>
+            <Dependent Role="tblRegisterPublicSalesRooms">
+              <PropertyRef Name="IdCSI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Get_BidderByDate_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PostingDate" Type="smalldatetime" Mode="In" />
+        </Function>
+        <Function Name="Insert_CSI_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CSINumber" Type="int" Mode="In" />
+          <Parameter Name="CSIName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Insert_RegBidder_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="CaseNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdCSI" Type="int" Mode="In" />
+          <Parameter Name="BidderName" Type="nvarchar" Mode="In" />
+          <Parameter Name="BidderAddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="PostingDate" Type="smalldatetime" Mode="In" />
+        </Function>
+        <Function Name="Insert_RegProtocols_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="CaseNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdCSI" Type="int" Mode="In" />
+          <Parameter Name="Remarks" Type="nvarchar" Mode="In" />
+          <Parameter Name="PostingDate" Type="smalldatetime" Mode="In" />
+        </Function>
+        <Function Name="Insert_RegSaleLocation_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="IdCSI" Type="int" Mode="In" />
+          <Parameter Name="PublicSaleDateTime" Type="smalldatetime" Mode="In" />
+          <Parameter Name="PublicSaleLocation" Type="nvarchar" Mode="In" />
+          <Parameter Name="Remarks" Type="nvarchar" Mode="In" />
+          <Parameter Name="PostingDate" Type="smalldatetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="CourtRegistersDBModelStoreContainer">
+          <EntitySet Name="Counters" EntityType="Self.Counters" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="tblCSI" EntityType="Self.tblCSI" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="tblRegisterBidder" EntityType="Self.tblRegisterBidder" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="tblRegisterProtocols" EntityType="Self.tblRegisterProtocols" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="tblRegisterPublicSalesRooms" EntityType="Self.tblRegisterPublicSalesRooms" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="tblSecurity" EntityType="Self.tblSecurity" Schema="dbo" p3:Type="Tables" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="vwProtocolsForDay" EntityType="Self.vwProtocolsForDay" p3:Type="Views" p3:Schema="dbo" xmlns:p3="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+            <DefiningQuery>SELECT 
+[vwProtocolsForDay].[ID] AS [ID], 
+[vwProtocolsForDay].[IncomeNumber] AS [IncomeNumber], 
+[vwProtocolsForDay].[CaseNumber] AS [CaseNumber], 
+[vwProtocolsForDay].[PostingDate] AS [PostingDate], 
+[vwProtocolsForDay].[IdCSI] AS [IdCSI], 
+[vwProtocolsForDay].[CSIName] AS [CSIName]
+FROM [dbo].[vwProtocolsForDay] AS [vwProtocolsForDay]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tblRegisterBidder_tblCSI" Association="Self.FK_tblRegisterBidder_tblCSI">
+            <End Role="tblCSI" EntitySet="tblCSI" />
+            <End Role="tblRegisterBidder" EntitySet="tblRegisterBidder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblRegisterProtocols_tblCSI" Association="Self.FK_tblRegisterProtocols_tblCSI">
+            <End Role="tblCSI" EntitySet="tblCSI" />
+            <End Role="tblRegisterProtocols" EntitySet="tblRegisterProtocols" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblRegisterPublicSalesRooms_tblCSI" Association="Self.FK_tblRegisterPublicSalesRooms_tblCSI">
+            <End Role="tblCSI" EntitySet="tblCSI" />
+            <End Role="tblRegisterPublicSalesRooms" EntitySet="tblRegisterPublicSalesRooms" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CourtRegistersDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="CourtRegistersDBEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="Insert_CSI_SP" ReturnType="Collection(Int32)">
+            <Parameter Name="CSINumber" Mode="In" Type="Int32" />
+            <Parameter Name="CSIName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Insert_RegBidder_SP" ReturnType="Collection(Int32)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="CaseNumber" Mode="In" Type="String" />
+            <Parameter Name="IdCSI" Mode="In" Type="Int32" />
+            <Parameter Name="BidderName" Mode="In" Type="String" />
+            <Parameter Name="BidderAddress" Mode="In" Type="String" />
+            <Parameter Name="PostingDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Insert_RegSaleLocation_SP" ReturnType="Collection(Int32)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="IdCSI" Mode="In" Type="Int32" />
+            <Parameter Name="PublicSaleDateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="PublicSaleLocation" Mode="In" Type="String" />
+            <Parameter Name="Remarks" Mode="In" Type="String" />
+            <Parameter Name="PostingDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Insert_RegProtocols_SP" ReturnType="Collection(Int32)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="CaseNumber" Mode="In" Type="String" />
+            <Parameter Name="IdCSI" Mode="In" Type="Int32" />
+            <Parameter Name="Remarks" Mode="In" Type="String" />
+            <Parameter Name="PostingDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Get_BidderByDate_SP" ReturnType="Collection(CourtRegistersDBModel.BidderByDate)">
+          <Parameter Name="PostingDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="Counters" EntityType="CourtRegistersDBModel.Counter" />
+          <EntitySet Name="tblCSIs" EntityType="CourtRegistersDBModel.tblCSI" />
+          <EntitySet Name="tblRegisterBidders" EntityType="CourtRegistersDBModel.tblRegisterBidder" />
+          <EntitySet Name="tblRegisterProtocols" EntityType="CourtRegistersDBModel.tblRegisterProtocol" />
+          <EntitySet Name="tblRegisterPublicSalesRooms" EntityType="CourtRegistersDBModel.tblRegisterPublicSalesRoom" />
+          <EntitySet Name="tblSecurities" EntityType="CourtRegistersDBModel.tblSecurity" />
+          <EntitySet Name="vwProtocolsForDays" EntityType="CourtRegistersDBModel.vwProtocolsForDay" />
+          <AssociationSet Name="FK_tblRegisterBidder_tblCSI" Association="CourtRegistersDBModel.FK_tblRegisterBidder_tblCSI">
+            <End Role="tblCSI" EntitySet="tblCSIs" />
+            <End Role="tblRegisterBidder" EntitySet="tblRegisterBidders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblRegisterProtocols_tblCSI" Association="CourtRegistersDBModel.FK_tblRegisterProtocols_tblCSI">
+            <End Role="tblCSI" EntitySet="tblCSIs" />
+            <End Role="tblRegisterProtocol" EntitySet="tblRegisterProtocols" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblRegisterPublicSalesRooms_tblCSI" Association="CourtRegistersDBModel.FK_tblRegisterPublicSalesRooms_tblCSI">
+            <End Role="tblCSI" EntitySet="tblCSIs" />
+            <End Role="tblRegisterPublicSalesRoom" EntitySet="tblRegisterPublicSalesRooms" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="BidderByDate">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="IncomeNumber" Nullable="false" />
+          <Property Type="String" Name="CaseNumber" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CSIName" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="BidderName" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="BidderAddress" Nullable="false" MaxLength="250" />
+          <Property Type="DateTime" Name="PostingDate" Nullable="false" Precision="16" />
+        </ComplexType>
+        <EntityType Name="Counter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TableEnum" Type="Int32" Nullable="false" />
+          <Property Name="LastNum" Type="Int32" Nullable="false" />
+          <Property Name="NextNum" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblCSI">
+          <Key>
+            <PropertyRef Name="IdCSI" />
+          </Key>
+          <Property Name="IdCSI" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CSINumber" Type="Int32" Nullable="false" />
+          <Property Name="CSIName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblRegisterBidders" Relationship="CourtRegistersDBModel.FK_tblRegisterBidder_tblCSI" FromRole="tblCSI" ToRole="tblRegisterBidder" />
+          <NavigationProperty Name="tblRegisterProtocols" Relationship="CourtRegistersDBModel.FK_tblRegisterProtocols_tblCSI" FromRole="tblCSI" ToRole="tblRegisterProtocol" />
+          <NavigationProperty Name="tblRegisterPublicSalesRooms" Relationship="CourtRegistersDBModel.FK_tblRegisterPublicSalesRooms_tblCSI" FromRole="tblCSI" ToRole="tblRegisterPublicSalesRoom" />
+        </EntityType>
+        <EntityType Name="tblRegisterBidder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IncomeNumber" Type="Int32" Nullable="false" />
+          <Property Name="CaseNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdCSI" Type="Int32" Nullable="false" />
+          <Property Name="BidderName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="BidderAddress" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PostingDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tblCSI" Relationship="CourtRegistersDBModel.FK_tblRegisterBidder_tblCSI" FromRole="tblRegisterBidder" ToRole="tblCSI" />
+        </EntityType>
+        <EntityType Name="tblRegisterProtocol">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IncomeNumber" Type="Int32" Nullable="false" />
+          <Property Name="IdCSI" Type="Int32" Nullable="false" />
+          <Property Name="CaseNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostingDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblCSI" Relationship="CourtRegistersDBModel.FK_tblRegisterProtocols_tblCSI" FromRole="tblRegisterProtocol" ToRole="tblCSI" />
+        </EntityType>
+        <EntityType Name="tblRegisterPublicSalesRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IncomeNumber" Type="Int32" Nullable="false" />
+          <Property Name="IdCSI" Type="Int32" Nullable="false" />
+          <Property Name="PublicSaleDateTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PublicSaleLocation" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="PostingDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Remarks" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblCSI" Relationship="CourtRegistersDBModel.FK_tblRegisterPublicSalesRooms_tblCSI" FromRole="tblRegisterPublicSalesRoom" ToRole="tblCSI" />
+        </EntityType>
+        <EntityType Name="tblSecurity">
+          <Key>
+            <PropertyRef Name="IdSec" />
+          </Key>
+          <Property Name="IdSec" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Court" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="HashValue" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vwProtocolsForDay">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IncomeNumber" />
+            <PropertyRef Name="CaseNumber" />
+            <PropertyRef Name="PostingDate" />
+            <PropertyRef Name="IdCSI" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IncomeNumber" Type="Int32" Nullable="false" />
+          <Property Name="CaseNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostingDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdCSI" Type="Int32" Nullable="false" />
+          <Property Name="CSIName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_tblRegisterBidder_tblCSI">
+          <End Type="CourtRegistersDBModel.tblCSI" Role="tblCSI" Multiplicity="1" />
+          <End Type="CourtRegistersDBModel.tblRegisterBidder" Role="tblRegisterBidder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCSI">
+              <PropertyRef Name="IdCSI" />
+            </Principal>
+            <Dependent Role="tblRegisterBidder">
+              <PropertyRef Name="IdCSI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblRegisterProtocols_tblCSI">
+          <End Type="CourtRegistersDBModel.tblCSI" Role="tblCSI" Multiplicity="1" />
+          <End Type="CourtRegistersDBModel.tblRegisterProtocol" Role="tblRegisterProtocol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCSI">
+              <PropertyRef Name="IdCSI" />
+            </Principal>
+            <Dependent Role="tblRegisterProtocol">
+              <PropertyRef Name="IdCSI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblRegisterPublicSalesRooms_tblCSI">
+          <End Type="CourtRegistersDBModel.tblCSI" Role="tblCSI" Multiplicity="1" />
+          <End Type="CourtRegistersDBModel.tblRegisterPublicSalesRoom" Role="tblRegisterPublicSalesRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCSI">
+              <PropertyRef Name="IdCSI" />
+            </Principal>
+            <Dependent Role="tblRegisterPublicSalesRoom">
+              <PropertyRef Name="IdCSI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CourtRegistersDBModelStoreContainer" CdmEntityContainer="CourtRegistersDBEntities">
+          <FunctionImportMapping FunctionImportName="Insert_CSI_SP" FunctionName="CourtRegistersDBModel.Store.Insert_CSI_SP" />
+          <FunctionImportMapping FunctionImportName="Insert_RegBidder_SP" FunctionName="CourtRegistersDBModel.Store.Insert_RegBidder_SP" />
+          <FunctionImportMapping FunctionImportName="Insert_RegSaleLocation_SP" FunctionName="CourtRegistersDBModel.Store.Insert_RegSaleLocation_SP" />
+          <FunctionImportMapping FunctionImportName="Insert_RegProtocols_SP" FunctionName="CourtRegistersDBModel.Store.Insert_RegProtocols_SP" />
+          <FunctionImportMapping FunctionImportName="Get_BidderByDate_SP" FunctionName="CourtRegistersDBModel.Store.Get_BidderByDate_SP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CourtRegistersDBModel.BidderByDate">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IncomeNumber" ColumnName="IncomeNumber" />
+                <ScalarProperty Name="CaseNumber" ColumnName="CaseNumber" />
+                <ScalarProperty Name="CSIName" ColumnName="CSIName" />
+                <ScalarProperty Name="BidderName" ColumnName="BidderName" />
+                <ScalarProperty Name="BidderAddress" ColumnName="BidderAddress" />
+                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Counters">
+            <EntityTypeMapping TypeName="CourtRegistersDBModel.Counter">
+              <MappingFragment StoreEntitySet="Counters">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="NextNum" ColumnName="NextNum" />
+                <ScalarProperty Name="LastNum" ColumnName="LastNum" />
+                <ScalarProperty Name="TableEnum" ColumnName="TableEnum" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCSIs">
+            <EntityTypeMapping TypeName="CourtRegistersDBModel.tblCSI">
+              <MappingFragment StoreEntitySet="tblCSI">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CSIName" ColumnName="CSIName" />
+                <ScalarProperty Name="CSINumber" ColumnName="CSINumber" />
+                <ScalarProperty Name="IdCSI" ColumnName="IdCSI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRegisterBidders">
+            <EntityTypeMapping TypeName="CourtRegistersDBModel.tblRegisterBidder">
+              <MappingFragment StoreEntitySet="tblRegisterBidder">
+                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
+                <ScalarProperty Name="BidderAddress" ColumnName="BidderAddress" />
+                <ScalarProperty Name="BidderName" ColumnName="BidderName" />
+                <ScalarProperty Name="IdCSI" ColumnName="IdCSI" />
+                <ScalarProperty Name="CaseNumber" ColumnName="CaseNumber" />
+                <ScalarProperty Name="IncomeNumber" ColumnName="IncomeNumber" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRegisterProtocols">
+            <EntityTypeMapping TypeName="CourtRegistersDBModel.tblRegisterProtocol">
+              <MappingFragment StoreEntitySet="tblRegisterProtocols">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
+                <ScalarProperty Name="CaseNumber" ColumnName="CaseNumber" />
+                <ScalarProperty Name="IdCSI" ColumnName="IdCSI" />
+                <ScalarProperty Name="IncomeNumber" ColumnName="IncomeNumber" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRegisterPublicSalesRooms">
+            <EntityTypeMapping TypeName="CourtRegistersDBModel.tblRegisterPublicSalesRoom">
+              <MappingFragment StoreEntitySet="tblRegisterPublicSalesRooms">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
+                <ScalarProperty Name="PublicSaleLocation" ColumnName="PublicSaleLocation" />
+                <ScalarProperty Name="PublicSaleDateTime" ColumnName="PublicSaleDateTime" />
+                <ScalarProperty Name="IdCSI" ColumnName="IdCSI" />
+                <ScalarProperty Name="IncomeNumber" ColumnName="IncomeNumber" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSecurities">
+            <EntityTypeMapping TypeName="CourtRegistersDBModel.tblSecurity">
+              <MappingFragment StoreEntitySet="tblSecurity">
+                <ScalarProperty Name="HashValue" ColumnName="HashValue" />
+                <ScalarProperty Name="Court" ColumnName="Court" />
+                <ScalarProperty Name="IdSec" ColumnName="IdSec" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwProtocolsForDays">
+            <EntityTypeMapping TypeName="CourtRegistersDBModel.vwProtocolsForDay">
+              <MappingFragment StoreEntitySet="vwProtocolsForDay">
+                <ScalarProperty Name="CSIName" ColumnName="CSIName" />
+                <ScalarProperty Name="IdCSI" ColumnName="IdCSI" />
+                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
+                <ScalarProperty Name="CaseNumber" ColumnName="CaseNumber" />
+                <ScalarProperty Name="IncomeNumber" ColumnName="IncomeNumber" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="CourtReportsDB" ZoomLevel="74">
+        <EntityTypeShape EntityType="CourtRegistersDBModel.Counter" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CourtRegistersDBModel.tblCSI" Width="1.5" PointX="0.75" PointY="4.625" />
+        <EntityTypeShape EntityType="CourtRegistersDBModel.tblRegisterBidder" Width="1.5" PointX="3" PointY="7.75" />
+        <EntityTypeShape EntityType="CourtRegistersDBModel.tblRegisterProtocol" Width="1.5" PointX="3" PointY="4.625" />
+        <EntityTypeShape EntityType="CourtRegistersDBModel.tblRegisterPublicSalesRoom" Width="1.5" PointX="3" PointY="1.25" />
+        <EntityTypeShape EntityType="CourtRegistersDBModel.tblSecurity" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="CourtRegistersDBModel.vwProtocolsForDay" Width="1.5" PointX="5.75" PointY="6.75" />
+        <AssociationConnector Association="CourtRegistersDBModel.FK_tblRegisterBidder_tblCSI" />
+        <AssociationConnector Association="CourtRegistersDBModel.FK_tblRegisterProtocols_tblCSI" />
+        <AssociationConnector Association="CourtRegistersDBModel.FK_tblRegisterPublicSalesRooms_tblCSI" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{78CB56A9-F25A-43AD-9732-EF41410325F1}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CourtRegisters</RootNamespace>
+    <AssemblyName>CourtRegisters</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icons\Book_JournalwPen.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseClasses\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseClasses\EditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseClasses\ListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\Enums.cs" />
+    <Compile Include="Classes\Logger.cs" />
+    <Compile Include="Classes\SelectItem.cs" />
+    <Compile Include="clsExtentions.cs" />
+    <Compile Include="clsSecurityManager.cs" />
+    <Compile Include="Controls\CaseNumber.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CaseNumber.Designer.cs">
+      <DependentUpon>CaseNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCSI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCSI.Designer.cs">
+      <DependentUpon>frmCSI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAllCSI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAllCSI.Designer.cs">
+      <DependentUpon>frmAllCSI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PartialClasses\tblCSI.cs" />
+    <Compile Include="ErrorLogger.cs" />
+    <Compile Include="frmAdminPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAdminPanel.Designer.cs">
+      <DependentUpon>frmAdminPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBidderByDate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBidderByDate.Designer.cs">
+      <DependentUpon>frmBidderByDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CourtReportsDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CourtReportsDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="frmAllBidders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAllBidders.Designer.cs">
+      <DependentUpon>frmAllBidders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAllProtocols.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAllProtocols.Designer.cs">
+      <DependentUpon>frmAllProtocols.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAllSaleLocation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAllSaleLocation.Designer.cs">
+      <DependentUpon>frmAllSaleLocation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBidder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBidder.Designer.cs">
+      <DependentUpon>frmBidder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMainForm.Designer.cs">
+      <DependentUpon>frmMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmProtocol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProtocol.Designer.cs">
+      <DependentUpon>frmProtocol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSaleLocation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSaleLocation.Designer.cs">
+      <DependentUpon>frmSaleLocation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportManagers\clsBidderByDate.cs" />
+    <Compile Include="ReportManagers\clsProtocolsForDay.cs" />
+    <Compile Include="frmShowReports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmShowReports.Designer.cs">
+      <DependentUpon>frmShowReports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReportManagers\clsBiddersByCSI.cs" />
+    <Compile Include="Repository\BiddersRepository.cs" />
+    <Compile Include="Repository\CountersRepository.cs" />
+    <Compile Include="Repository\PublicSalesRoomsRepository.cs" />
+    <Compile Include="Repository\ProtocolsRepository.cs" />
+    <Compile Include="Repository\CSIRepository.cs" />
+    <EmbeddedResource Include="Controls\CaseNumber.resx">
+      <DependentUpon>CaseNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCSI.resx">
+      <DependentUpon>frmCSI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAdminPanel.resx">
+      <DependentUpon>frmAdminPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAllCSI.resx">
+      <DependentUpon>frmAllCSI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBidderByDate.resx">
+      <DependentUpon>frmBidderByDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAllBidders.resx">
+      <DependentUpon>frmAllBidders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAllProtocols.resx">
+      <DependentUpon>frmAllProtocols.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAllSaleLocation.resx">
+      <DependentUpon>frmAllSaleLocation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBidder.resx">
+      <DependentUpon>frmBidder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMainForm.resx">
+      <DependentUpon>frmMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProtocol.resx">
+      <DependentUpon>frmProtocol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSaleLocation.resx">
+      <DependentUpon>frmSaleLocation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Reports\BidderByCSI.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmShowReports.resx">
+      <DependentUpon>frmShowReports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\BidderByDate.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ProtocolsByDate.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EntityDeploy Include="CourtReportsDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CourtReportsDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\BidderByDate.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icons\Book_JournalwPen.ico" />
+    <Content Include="Icons\exit.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
